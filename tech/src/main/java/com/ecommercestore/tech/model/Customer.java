@@ -12,6 +12,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(unique = true)
     private String userName;   //stores the emailId
     private String name;
     private String password;
