@@ -1,0 +1,34 @@
+<div class="customer-login-form-parent">
+    <mat-card>
+        <form class="customer-login-form">
+            <mat-form-field class="example-full-width" appearance="fill" [style.width.px]=235>
+              <mat-label>Email</mat-label>
+              <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                     placeholder="Ex. yourname@example.com" [(ngModel)]="userName">
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your password</mat-label>
+                <input matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher" [type]="hide ? 'password' : 'text'" [(ngModel)] = "password" name="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
+                    Password is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <button [disabled]="passwordEmpty() || emailEmpty() || emailFormControl.hasError('email')" mat-button (click) = "login()">Login</button>
+            <mat-error *ngIf="loginErr">
+                Invalid Email or Password
+            </mat-error>
+        </form>
+    
+    </mat-card>
+</div>

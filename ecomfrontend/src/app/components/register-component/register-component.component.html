@@ -1,0 +1,54 @@
+<div class="customer-register-form-parent">
+    <mat-card>
+        <form class="customer-register-form">
+            <mat-form-field class="example-full-width" appearance="fill" [style.width.px]=235>
+              <mat-label>Email</mat-label>
+              <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                     placeholder="Ex. yourname@example.com" [(ngModel)]="userName">
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your password</mat-label>
+                <input matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher" [type]="hide ? 'password' : 'text'" [(ngModel)] = "password" name="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
+                    Password is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field class="example-full-width" appearance="fill" [style.width.px]=235>
+                <mat-label>Name</mat-label>
+                <input type="text" matInput [formControl]="nameFormControl" [errorStateMatcher]="matcher"
+                 [(ngModel)]="name">
+                <mat-error *ngIf="nameFormControl.hasError('required')">
+                  Name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field class="example-full-width" appearance="fill" [style.width.px]=235>
+                <mat-label>Address</mat-label>
+                <input type="text" matInput [formControl]="addressFormControl" [errorStateMatcher]="matcher"
+                 [(ngModel)]="address">
+                <mat-error *ngIf="addressFormControl.hasError('required')">
+                  Address is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <button [disabled]="addressFormControl.hasError('required') || nameFormControl.hasError('required') || passwordFormControl.hasError('required') || emailFormControl.hasError('required') || emailFormControl.hasError('email')" mat-button (click) = "doRegister()">Register</button>
+            <mat-error *ngIf="registrationErr == 2">
+                Error Registering you!
+            </mat-error>
+            <div class="success" *ngIf="registrationErr == 1">
+              Registration Successful!
+            </div>
+        </form>
+    </mat-card>
+</div>
