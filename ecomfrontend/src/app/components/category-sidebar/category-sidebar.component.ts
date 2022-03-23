@@ -32,4 +32,8 @@ export class CategorySidebarComponent implements OnInit {
     )
   }
 
+  getProductByProductCategoryName(event: any) {
+    var productCategoryName: string = event.currentTarget.id; 
+  }
+
 }

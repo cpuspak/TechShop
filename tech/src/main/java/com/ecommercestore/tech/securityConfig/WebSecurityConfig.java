@@ -37,6 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests().antMatchers("/customer/authenticate").permitAll()
                 .antMatchers("/customer/registerCustomer").permitAll()
                 .antMatchers("/productCategories/getAllProductCategories").permitAll()
+                .antMatchers("/product/getByProductCategoryId").permitAll()
+                .antMatchers("/product/getByProductCategoryName").permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

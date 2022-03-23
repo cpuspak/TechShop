@@ -1,4 +1,6 @@
 
 <mat-nav-list>
-    <a mat-list-item routerLink="." *ngFor="let ele of catagoryList">{{ele.name}}</a>
+    <mat-list-item routerLink="." *ngFor="let ele of catagoryList">
+        <button id={{ele.name}} mat-flat-button (click)="getProductByProductCategoryName($event)">{{ele.name}}</button>
+    </mat-list-item>
 </mat-nav-list>
