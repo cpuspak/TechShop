@@ -25,6 +25,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { CustomerDashboardComponent } from './components/customer-dashboard/customer-dashboard.component';
 import {MatList, MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { ItemTileComponent } from './components/item-tile/item-tile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     ItemsByCategoryComponent,
     ProfileSidebarComponent,
     RegisterComponentComponent,
-    CustomerDashboardComponent
+    CustomerDashboardComponent,
+    ItemTileComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,14 @@
-<div *ngIf="products != null && products.length > 0">
+<!--<div *ngIf="products != null && products.length > 0">
     <mat-grid-list cols="2" rowHeight="2:1">
         <mat-grid-tile *ngFor="let element of products">{{element.name}}</mat-grid-tile>
     </mat-grid-list>
 </div>
+-->
+
+<div *ngIf="products != null && products.length > 0">
+    <div *ngFor="let element of products">
+        <app-item-tile [product]="element"></app-item-tile>
+    </div>
+</div>
+
+
