@@ -1,5 +1,6 @@
-.example-card {
+.product-card {
     max-width: 400px;
+    margin:20px;
 }
   
 .example-header-image {
