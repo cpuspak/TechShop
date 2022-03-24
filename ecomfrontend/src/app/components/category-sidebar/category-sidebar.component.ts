@@ -21,7 +21,7 @@ export class CategorySidebarComponent implements OnInit {
   }
 
   getCatalogs(){
-    this.categoryService.getCatalog().subscribe(
+    this.categoryService.getCategory().subscribe(
       (response: any) => {
         console.log(response)
         this.catagoryList = response
@@ -33,7 +33,10 @@ export class CategorySidebarComponent implements OnInit {
   }
 
   getProductByProductCategoryName(event: any) {
-    var productCategoryName: string = event.currentTarget.id; 
+    var productCategoryName: string = event.currentTarget.id;
+    console.log(productCategoryName)
+    this.categoryService.selectedCategory.next(productCategoryName)
+
   }
 
 }

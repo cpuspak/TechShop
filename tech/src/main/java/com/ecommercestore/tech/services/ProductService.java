@@ -25,6 +25,8 @@ public class ProductService {
 
     public List<Product> getProductByProductCategryName(String productCategoryName){
         ProductCategories productCategories = productCategoriesRepository.findByName(productCategoryName);
+        System.out.println(productCategories.toString());
+        System.out.println(this.getProductByProductCategory(productCategories.getId()));
         return this.getProductByProductCategory(productCategories.getId());
     }
 

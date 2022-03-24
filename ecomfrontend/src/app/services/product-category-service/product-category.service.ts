@@ -1,19 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductCategoryService {
 
-  catalogListUrl: string = "http://localhost:8081/productCategories/getAllProductCategories"
+  public selectedCategory = new Subject()
+
+  categoryListUrl: string = "http://localhost:8081/productCategories/getAllProductCategories"
   
   constructor(private http: HttpClient) { }
 
-  
-
-  getCatalog(){
-    return this.http.get(this.catalogListUrl)
+  getCategory(){
+    return this.http.get(this.categoryListUrl)
   }
+
 
 }
