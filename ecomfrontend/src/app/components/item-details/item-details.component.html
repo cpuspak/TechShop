@@ -1,1 +1,15 @@
-<p>item-details works!</p>
+<div *ngIf="productDetails && productDetails.id">
+    {{productDetails.id}}
+</div>
+<div *ngIf="productDetails && productDetails.name">
+    {{productDetails.name}}
+</div>
+<div *ngIf="productDetails && productDetails.price">
+    {{productDetails.price}}
+</div>
+<div *ngIf="productDetails && productDetails.image">
+    {{productDetails.image}}
+</div>
+<div *ngIf="productDetails && productDetails.description">
+    {{productDetails.description}}
+</div>

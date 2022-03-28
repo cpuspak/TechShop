@@ -15,6 +15,13 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    @GetMapping("/getById")
+    ResponseEntity<?> getProductByProductId(@RequestParam long productId) {
+        System.out.println(productService.getProductByProductId(productId).toString());
+        return ResponseEntity.ok().body(productService.getProductByProductId(productId));
+    }
+
+
     @GetMapping("/getByProductCategoryId")
     ResponseEntity<?> getProductByProductCategoryId(@RequestParam long productCategoryId){
         return ResponseEntity.ok().body(productService.getProductByProductCategory(productCategoryId));

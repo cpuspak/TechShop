@@ -9,4 +9,7 @@
         {{product.description}}
       </p>
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button (click)="viewProduct($event)"><span  id={{product.id}}>VIEW</span></button>
+    </mat-card-actions>
 </mat-card>

@@ -41,6 +41,11 @@ const routes: Routes = [
   {
     path: 'productCategories',
     component: CategorySidebarComponent
+  },
+  {
+    path: 'productDetails/:id',
+    component: ItemDetailsComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

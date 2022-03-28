@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -16,6 +17,14 @@ public class ProductService {
 
     @Autowired
     ProductCategoriesRepository productCategoriesRepository;
+
+    public Product getProductByProductId(long productId){
+        Optional<Product> product = productRepository.findById(productId);
+        if (product.isPresent()){
+            return product.get();
+        }
+        return null;
+    }
 
     public List<Product> getProductByProductCategory(long productCategoryId){
         ProductCategories productCategories = new ProductCategories();

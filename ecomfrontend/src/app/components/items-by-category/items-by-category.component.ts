@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { ProductCategoryService } from 'src/app/services/product-category-service/product-category.service';
 import { ProductService } from 'src/app/services/product-service/product.service';
 
@@ -7,7 +7,7 @@ import { ProductService } from 'src/app/services/product-service/product.service
   templateUrl: './items-by-category.component.html',
   styleUrls: ['./items-by-category.component.css']
 })
-export class ItemsByCategoryComponent implements OnInit {
+export class ItemsByCategoryComponent implements OnInit, DoCheck {
 
 
   category: string = ""
@@ -16,9 +16,16 @@ export class ItemsByCategoryComponent implements OnInit {
     private productService:ProductService) { }
   
   ngOnInit(): void {
+    this.fetchProducts()
+  }
+
+  ngDoCheck() {
+  }
+
+  fetchProducts() {
     this.productCategoryService.selectedCategory.subscribe(
-      (req:any) => {
-        this.category = req;
+      (res:any) => {
+        this.category = res
         this.productService.getProductsByCategoryName(this.category).subscribe(
           (res: any) => {
             this.products = res
@@ -33,7 +40,6 @@ export class ItemsByCategoryComponent implements OnInit {
         console.log("Error getting currently selected category")
       }
     )
-  
   }
 
 }

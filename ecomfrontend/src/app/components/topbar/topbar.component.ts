@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { DashboardService } from 'src/app/services/dashboard-service/dashboard.service';
 import { LoginCustomerService } from 'src/app/services/login-customer-service/login-customer.service';
 import { SidebarServiceService } from 'src/app/services/sidebar-service/sidebar-service.service';
 
@@ -13,14 +14,20 @@ import { SidebarServiceService } from 'src/app/services/sidebar-service/sidebar-
 })
 export class TopbarComponent implements OnInit {
   isLoggedIn: boolean = false;
+  showTopbar: boolean = true;
   sideNav !: MatSidenav;
 
   constructor(private customerLoginService: LoginCustomerService,
     private router: Router,
-    private sideNavService: SidebarServiceService) { }
+    private sideNavService: SidebarServiceService,
+    private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.customerLoginService.isLoggedIn();
+  }
+
+  ngDoCheck() {
+    this.showTopbar = this.dashboardService.getShowTopbar()
   }
 
   ngAfterViewInit() {
@@ -36,6 +43,10 @@ export class TopbarComponent implements OnInit {
     if (this.sideNav != undefined){
       this.sideNav.toggle()
     }
+  }
+
+  goBackToDashboard() {
+    window.location.href = '/dashboard'
   }
 
   loginCustomer(){

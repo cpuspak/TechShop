@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductCategoryService } from 'src/app/services/product-category-service/product-category.service';
 import { Category } from 'src/app/interfaces/Category'
+import { DashboardService } from 'src/app/services/dashboard-service/dashboard.service';
 
 
 @Component({
@@ -12,7 +13,8 @@ export class CategorySidebarComponent implements OnInit {
 
   catagoryList: Array<Category> = []
   
-  constructor(private categoryService: ProductCategoryService) {}
+  constructor(private categoryService: ProductCategoryService,
+    private dashboardService: DashboardService) {}
 
   
   ngOnInit(): void {
@@ -36,7 +38,7 @@ export class CategorySidebarComponent implements OnInit {
     var productCategoryName: string = event.currentTarget.id;
     console.log(productCategoryName)
     this.categoryService.selectedCategory.next(productCategoryName)
-
+    //this.dashboardService.dashboardControl.next("0")
   }
 
 }

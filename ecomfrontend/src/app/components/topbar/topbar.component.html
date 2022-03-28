@@ -1,5 +1,7 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button (click)="toggleSideNav()" *ngIf="isLoggedIn"><mat-icon>menu</mat-icon></button>
+    <button mat-icon-button (click)="toggleSideNav()" *ngIf="isLoggedIn && showTopbar"><mat-icon>menu</mat-icon></button>
+    <button mat-icon-button (click)="goBackToDashboard()" *ngIf="isLoggedIn && !showTopbar"><mat-icon>keyboard_arrow_left</mat-icon></button>
+    
     <span class="spacer"></span>
     <button mat-flat-button *ngIf="!isLoggedIn" (click)="loginCustomer()" color="primary">Login</button>
     <button mat-flat-button *ngIf="!isLoggedIn" (click)="registerCustomer()" color="primary">Register</button>
