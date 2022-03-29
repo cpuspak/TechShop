@@ -6,5 +6,6 @@
     <button mat-flat-button *ngIf="!isLoggedIn" (click)="loginCustomer()" color="primary">Login</button>
     <button mat-flat-button *ngIf="!isLoggedIn" (click)="registerCustomer()" color="primary">Register</button>
     <button mat-flat-button *ngIf="isLoggedIn" (click)="logoutCustomer()" color="primary">Logout</button>
+    <button mat-flat-button *ngIf="isLoggedIn" (click)="showCart()" color="primary">{{cartItemCount}} Items in cart</button>
     <button mat-flat-button *ngIf="isLoggedIn" (click)="userProfile()" color="primary">MyProfile</button>
 </mat-toolbar>

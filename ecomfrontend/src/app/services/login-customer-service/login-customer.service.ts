@@ -20,8 +20,9 @@ export class LoginCustomerService {
     return this.http.post(this.loginUrl, customerCredentials)
   }
 
-  loginCustomer(token: string): boolean{
+  loginCustomer(token: string, userName: string): boolean{
     localStorage.setItem("token", token);
+    localStorage.setItem("userName", userName)
     return true;
   }
 
@@ -33,6 +34,7 @@ export class LoginCustomerService {
 
   logoutCustomer(): boolean{
     localStorage.removeItem("token")
+    localStorage.removeItem("userName")
     return true
   }
 

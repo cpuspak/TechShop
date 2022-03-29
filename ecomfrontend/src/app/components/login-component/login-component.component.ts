@@ -36,7 +36,7 @@ export class LoginComponentComponent implements OnInit {
       this.customerLoginService.generateToken(customerCredentials).subscribe(
         (response: any) => {
           console.log(response)
-          this.customerLoginService.loginCustomer(response.jwt)
+          this.customerLoginService.loginCustomer(response.jwt, customerCredentials.userName)
           window.location.href = 'dashboard'
           this.loginErr = false
         },
