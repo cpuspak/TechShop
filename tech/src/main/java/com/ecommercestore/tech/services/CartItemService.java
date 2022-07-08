@@ -5,6 +5,7 @@ import com.ecommercestore.tech.model.CartItem;
 import com.ecommercestore.tech.model.Customer;
 import com.ecommercestore.tech.model.Product;
 import com.ecommercestore.tech.repository.CartItemRepository;
+import com.ecommercestore.tech.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,31 @@ public class CartItemService {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    ProductRepository productRepository;
+
 
     public long getCartItemCountByCustomerUserName(String customerUserName){
         Customer customer = customerService.getByUserName(customerUserName);
         long customerId = customer.getId();
-        return cartItemRepository.countByCustomerId(customerId);
+        List<CartItem> cartItems = this.getCartItemsByCustomerId(customerId);
+
+        long noOfCartItems = 0;
+
+        for(CartItem cartItem: cartItems) {
+            noOfCartItems += cartItem.getNoOfUnits();
+        }
+
+        return noOfCartItems;
+        //return cartItemRepository.countByCustomerId(customerId);
+    }
+
+    private List<CartItem> getCartItemsByCustomerId(long customerId){
+        return cartItemRepository.findByCustomerId(customerId);
+    }
+
+    private Optional<CartItem> getCartItemsByCustomerIdAndProductId(long customerId, long productId){
+        return cartItemRepository.findByCustomerIdAndProductId(customerId, productId);
     }
 
     public List<CartItem> getCartItemsByCustomerName(String customerUserName){
@@ -52,25 +73,30 @@ public class CartItemService {
         return null;
     }
 
-    public CartItem addCartItemByCustomerUserNameAndProductId(String customerUserName, long productId) {
+    public CartItem addCartItemByCustomerUserNameAndProductId(String customerUserName, long productId, long count) {
         Customer customer = customerService.getByUserName(customerUserName);
+        System.out.println("flag0 " + customerUserName);
         if (customer == null) return null;
         long customerId = customer.getId();
-        Optional<CartItem> optionalCartItem = cartItemRepository.findByCustomerIdAndProductId(customerId, productId);
-        if (optionalCartItem.isPresent()){
-            CartItem cartItem = optionalCartItem.get();
-            cartItem.setNoOfUnits(cartItem.getNoOfUnits() + 1);
-            cartItemRepository.save(cartItem);
-            return cartItem;
+        System.out.println("flag1");
+        Product product = productService.getProductByProductId(productId);
+        if (product == null) return null;
+        System.out.println("flag2");
+        if (product.getAvailableUnits() - count < 0) return null;
+        System.out.println("flag3");
+
+        Optional<CartItem> presentCartItem = this.getCartItemsByCustomerIdAndProductId(customerId, productId);
+        CartItem cartItem;
+        if (presentCartItem.isPresent()){
+            cartItem = presentCartItem.get();
+            cartItem.setNoOfUnits(cartItem.getNoOfUnits() + count);
         }
         else {
-            long noOfUnits = 1;
-            Product product = productService.getProductByProductId(productId);
-            if (product == null) return null;
-
-            CartItem cartItem = new CartItem(noOfUnits, product, customer);
-            cartItemRepository.save(cartItem);
-            return cartItem;
+            cartItem = new CartItem(count, product, customer);
         }
+        cartItemRepository.save(cartItem);
+        product.setAvailableUnits(product.getAvailableUnits() - (int)count);
+        productRepository.save(product);
+        return cartItem;
     }
 }

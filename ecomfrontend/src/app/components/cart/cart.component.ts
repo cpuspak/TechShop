@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cart',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog,
+    public dialogRef: MatDialogRef<CartComponent>) { }
 
   ngOnInit(): void {
+  }
+
+  closeOverlay(){
+    this.dialogRef.close()
   }
 
 }

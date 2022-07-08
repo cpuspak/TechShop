@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.ecommercestore.tech.model.CartItemAdd;
+
 @RestController
 @RequestMapping("/cartItem")
 @CrossOrigin
@@ -36,8 +38,14 @@ public class CartItemController {
     }
 
     @PutMapping("/addCartItemByCustomerIdAndProductId")
-    ResponseEntity<?> addCartItemByCustomerUserNameAndProductId(@RequestParam String customerUserName, @RequestParam long productId){
-        CartItem cartItem = cartItemService.addCartItemByCustomerUserNameAndProductId(customerUserName, productId);
+    ResponseEntity<?> addCartItemByCustomerUserNameAndProductId(@RequestBody CartItemAdd cartItemAddObject){
+        System.out.println("Add cart items");
+        System.out.println(cartItemAddObject.toString());
+        CartItem cartItem = cartItemService.addCartItemByCustomerUserNameAndProductId(
+                cartItemAddObject.getCustomerUserName(),
+                cartItemAddObject.getProductId(),
+                cartItemAddObject.getCount()
+        );
         if (cartItem == null) {
             return ResponseEntity.status(400).body("invalid input params");
         }

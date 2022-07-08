@@ -26,6 +26,9 @@ import { CustomerDashboardComponent } from './components/customer-dashboard/cust
 import {MatList, MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ItemTileComponent } from './components/item-tile/item-tile.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [
@@ -57,7 +60,9 @@ import { ItemTileComponent } from './components/item-tile/item-tile.component';
     MatCardModule,
     MatSidenavModule,
     MatListModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

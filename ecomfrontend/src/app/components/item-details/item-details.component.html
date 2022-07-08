@@ -13,4 +13,18 @@
 <div *ngIf="productDetails && productDetails.description">
     {{productDetails.description}}
 </div>
-<button (click)="callCart()">callCart</button>
+<input matInput type="number" min="1" [(ngModel)]="numberOfItems" [formControl]="numberOfItemsValidator">
+<mat-error *ngIf="numberOfItemsValidator.hasError('min') || numberOfItemsValidator.hasError('required')">
+    Please add valid no of items
+</mat-error>
+<div>
+    Total Price:
+    <span
+        *ngIf="productDetails != undefined && productDetails.price != undefined && numberOfItems != undefined && !numberOfItemsValidator.hasError('min') && !numberOfItemsValidator.hasError('required')">
+        {{productDetails.price * numberOfItems}}
+    </span>
+</div>
+<button (click)="addToCart()"
+    [disabled]="numberOfItemsValidator.hasError('min') || numberOfItemsValidator.hasError('required')">Add to
+    cart</button>
+<button (click)="closeOverlay()">X</button>

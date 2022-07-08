@@ -1,10 +1,12 @@
 import { AfterContentChecked, AfterContentInit, Component, OnChanges, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { CartItemsService } from 'src/app/services/cartItems-service/cart-items.service';
 import { DashboardService } from 'src/app/services/dashboard-service/dashboard.service';
 import { LoginCustomerService } from 'src/app/services/login-customer-service/login-customer.service';
 import { SidebarServiceService } from 'src/app/services/sidebar-service/sidebar-service.service';
+import { CartComponent } from '../cart/cart.component';
 
 
 
@@ -23,7 +25,8 @@ export class TopbarComponent implements OnInit, AfterContentInit {
     private router: Router,
     private sideNavService: SidebarServiceService,
     private dashboardService: DashboardService,
-    private cartItemService: CartItemsService) { }
+    private cartItemService: CartItemsService,
+    private dialog: MatDialog) { }
 
   
   ngOnInit(): void {
@@ -33,7 +36,7 @@ export class TopbarComponent implements OnInit, AfterContentInit {
       this.cartItemService.getCartItemsCountByCustomerUserName(localStorage.getItem("userName")).subscribe(
         (res: any) => {
           this.cartItemCount = res
-          console.log("cartItemCalledFromInit")
+          console.log("cartItemCalledFromInit", res)
         }
       )
     }
@@ -45,8 +48,8 @@ export class TopbarComponent implements OnInit, AfterContentInit {
     this.cartItemService.sendCartItemCount.subscribe(
       (res: any) => {
         if (res){
-          //this.cartItemCount = res;
-          this.cartItemCount += 1
+          console.log(res)
+          this.cartItemCount = res
           console.log("cart called")
         }
         
@@ -95,7 +98,10 @@ export class TopbarComponent implements OnInit, AfterContentInit {
   }
 
   showCart() {
-    console.log("show cart")
+    const dialogRef = this.dialog.open(CartComponent, {
+      width: '2500px',
+      height: '1500px'
+    });
   }
 
 }
