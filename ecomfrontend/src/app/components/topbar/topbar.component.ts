@@ -47,12 +47,11 @@ export class TopbarComponent implements OnInit, AfterContentInit {
   ngAfterContentInit(){
     this.cartItemService.sendCartItemCount.subscribe(
       (res: any) => {
-        if (res){
+        if (res != null && res >= 0){
           console.log(res)
           this.cartItemCount = res
           console.log("cart called")
         }
-        
       }
     )
   }

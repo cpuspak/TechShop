@@ -5,10 +5,12 @@ import com.ecommercestore.tech.model.CartItem;
 import com.ecommercestore.tech.model.Customer;
 import com.ecommercestore.tech.model.Product;
 import com.ecommercestore.tech.repository.CartItemRepository;
+import com.ecommercestore.tech.repository.CustomerRepository;
 import com.ecommercestore.tech.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,9 @@ public class CartItemService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
 
 
     public long getCartItemCountByCustomerUserName(String customerUserName){
@@ -53,22 +58,29 @@ public class CartItemService {
     public List<CartItem> getCartItemsByCustomerName(String customerUserName){
         Customer customer = customerService.getByUserName(customerUserName);
         long customerId = customer.getId();
-        return cartItemRepository.findByCustomerId(customerId);
+        List<CartItem> returnListUnfiltered = cartItemRepository.findByCustomerId(customerId);
+        for(int i = 0 ; i < returnListUnfiltered.size() ; i++)
+            returnListUnfiltered.get(i).setCustomer(null);
+
+        return returnListUnfiltered;
     }
 
     public CartItem removeCartItemByCartItemId(long cartItemId){
         Optional<CartItem> cartItemOptional = cartItemRepository.findById(cartItemId);
         if (cartItemOptional.isPresent()){
             CartItem cartItem = cartItemOptional.get();
-            if (cartItem.getNoOfUnits() == 1){
-                cartItemRepository.deleteById(cartItemId);
-                cartItem.setNoOfUnits(cartItem.getNoOfUnits() - 1);
-                return cartItem;
-            } else if(cartItem.getNoOfUnits() > 1){
-                cartItem.setNoOfUnits(cartItem.getNoOfUnits() - 1);
-                cartItemRepository.save(cartItem);
-                return cartItem;
-            }
+            cartItemRepository.deleteById(cartItemId);
+//            if (cartItem.getNoOfUnits() == 1){
+//                cartItemRepository.deleteById(cartItemId);
+//                cartItem.setNoOfUnits(cartItem.getNoOfUnits() - 1);
+//                return cartItem;
+//            } else if(cartItem.getNoOfUnits() > 1){
+//                cartItem.setNoOfUnits(cartItem.getNoOfUnits() - 1);
+//                cartItemRepository.save(cartItem);
+//                return cartItem;
+//            }
+            cartItem.setCustomer(null);
+            return cartItem;
         }
         return null;
     }
@@ -89,14 +101,33 @@ public class CartItemService {
         CartItem cartItem;
         if (presentCartItem.isPresent()){
             cartItem = presentCartItem.get();
+            if (cartItem.getNoOfUnits()+count > product.getAvailableUnits()) return null;
             cartItem.setNoOfUnits(cartItem.getNoOfUnits() + count);
         }
         else {
             cartItem = new CartItem(count, product, customer);
         }
         cartItemRepository.save(cartItem);
-        product.setAvailableUnits(product.getAvailableUnits() - (int)count);
-        productRepository.save(product);
+//        product.setAvailableUnits(product.getAvailableUnits() - (int)count);
+//        productRepository.save(product);
         return cartItem;
     }
+
+    public List<Long> checkoutCartItemByCustomerUserName(String customerUserName){
+        List<Long> invalidCartItemIds = new ArrayList<>();
+        Customer customer = customerRepository.findByUserName(customerUserName);
+
+        List<CartItem> cartItemsWithUserId = this.cartItemRepository.findByCustomerId(customer.getId());
+
+        for(int i = 0 ; i < cartItemsWithUserId.size() ; i++){
+            CartItem tempCartItem = cartItemsWithUserId.get(i);
+            Product tempProduct = tempCartItem.getProduct();
+            if (tempCartItem.getNoOfUnits() > tempProduct.getAvailableUnits()) {
+                invalidCartItemIds.add(tempCartItem.getId());
+                System.out.println(tempProduct.getName());
+            }
+        }
+        return invalidCartItemIds;
+    }
+
 }

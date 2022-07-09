@@ -1,2 +1,12 @@
 <p>cart works!</p>
+
+<div *ngIf="cartItems != null && cartItems.length > 0">
+    <div *ngFor="let element of cartItems">
+        
+        <app-cart-items [cartItem]="element"></app-cart-items>
+    </div>
+</div>
+
+
+<button (click) = "checkout()">checkout</button>
 <button (click) = "closeOverlay()">X</button>

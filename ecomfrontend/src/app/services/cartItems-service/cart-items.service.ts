@@ -8,7 +8,14 @@ import { Subject } from 'rxjs';
 export class CartItemsService {
   getNumberOfCartItemsByCustomerUserNameUrl: string = "http://localhost:8081/cartItem/getNumberOfCartItemsByCustomerUserName"
   addItemsToCartUrl: string = "http://localhost:8081/cartItem/addCartItemByCustomerIdAndProductId"
+  getCartItemsByCustomerUserNameUrl: string = "http://localhost:8081/cartItem/getCartItemsByCustomerUserName"
+  removeCartItemsByCartItemIdUrl: string = "http://localhost:8081/cartItem/removeCartItemByCartItemId"
+  checkoutCartItemByUserNameUrl: string = "http://localhost:8081/cartItem/checkoutCartItemByCustomerUserName"
+
+
   sendCartItemCount = new Subject()
+  decreaseFromCartItemsCount = new Subject()
+  unavailableCartItems = new Subject()
 
   constructor(private http: HttpClient) { }
 
@@ -25,6 +32,18 @@ export class CartItemsService {
     }
     
     return this.http.put(this.addItemsToCartUrl,addItemsToCartObject)
+  }
+
+  getCartItemsByCustomerUserName(userName: any) {
+    return this.http.get(this.getCartItemsByCustomerUserNameUrl + "?customerUserName="+ userName);
+  }
+
+  removeItemsFromCart(cartItemId: any){
+    return this.http.delete(this.removeCartItemsByCartItemIdUrl + "?cartItemId="+ cartItemId);
+  }
+
+  checkoutCartItems(userName: any){
+    return this.http.post(this.checkoutCartItemByUserNameUrl,{"userName": userName});
   }
 
 }

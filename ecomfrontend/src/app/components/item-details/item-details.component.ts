@@ -77,13 +77,14 @@ export class ItemDetailsComponent implements OnInit {
             this.cartItemService.getCartItemsCountByCustomerUserName(localStorage.getItem("userName")).subscribe(
               (res1: any) => {
                 this.cartItemService.sendCartItemCount.next(res1)
+                this.displaySnackBar("Items added to cart")
               }
             )
           }
           //this.cartItemService.sendCartItemCount.next(res)
         }, (error : any) => {
           console.log("don't have so much stock")
-          this.displaySnackBar()
+          this.displaySnackBar("don't have so much stock")
         }
       )
     }
@@ -94,8 +95,8 @@ export class ItemDetailsComponent implements OnInit {
     this.dialogRef.close()
   }
 
-  displaySnackBar(){
-    this.snackBar.open("Don't have so much stock", "Close", {duration : 3000})
+  displaySnackBar(message: string){
+    this.snackBar.open(message, "Close", {duration : 2000})
   }
 
 }

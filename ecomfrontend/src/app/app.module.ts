@@ -28,6 +28,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { ItemTileComponent } from './components/item-tile/item-tile.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CartItemsComponent } from './components/cart-items/cart-items.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ProfileSidebarComponent,
     RegisterComponentComponent,
     CustomerDashboardComponent,
-    ItemTileComponent
+    ItemTileComponent,
+    CartItemsComponent
   ],
   imports: [
     BrowserModule,
