@@ -17,7 +17,7 @@ export class CartComponent implements OnInit, AfterContentInit {
     private snackBar: MatSnackBar) { }
 
   cartItems !: Array<CartItem>
-  unavailableCartItems !: Array<number>
+  cartItemsForCheckOut !: Array<CartItem>
   ngOnInit(): void {
     if (localStorage.getItem("userName") && localStorage.getItem("userName") != ""){
       this.cartItemsService.getCartItemsByCustomerUserName(localStorage.getItem("userName")).subscribe(
@@ -46,15 +46,51 @@ export class CartComponent implements OnInit, AfterContentInit {
         if (localStorage.getItem("userName") && localStorage.getItem("userName") != ""){
           this.cartItemsService.getCartItemsByCustomerUserName(localStorage.getItem("userName")).subscribe(
             (res1: any) => {
-              for (let index = 0; index < this.cartItems.length; index++) {
-                if (this.cartItems[index].id in this.unavailableCartItems)
-                  this.cartItems[index].limitExceeded = true
-              }
+              if (res1) this.cartItems = res1;
             }
           )
         }
       }
     )
+
+    this.cartItemsService.addCartItemSubject.subscribe(
+      (res: any) => {
+        if (!this.cartItemsForCheckOut) this.cartItemsForCheckOut = Array<CartItem>(res)
+        else this.cartItemsForCheckOut.push(res)
+        console.log("updated cart", this.cartItemsForCheckOut)
+      }
+      
+    )
+
+    this.cartItemsService.removeCartItemSubject.subscribe(
+      (res: any) => {
+        for(let i = 0 ; i < this.cartItemsForCheckOut.length ; i++){
+          if (this.cartItemsForCheckOut[i].id == res.id) {
+            this.cartItemsForCheckOut.splice(i,1)
+            break
+          }
+        }
+        console.log("updated cart", this.cartItemsForCheckOut)
+      }
+    )
+
+    this.cartItemsService.reRenderCartItemsSubject.subscribe(
+      (res: any) => {
+        for(let i = 0 ; i < res.length ; i++){
+          for(let j = 0 ; j < this.cartItems.length ; j++){
+            if (res[i].id == this.cartItems[j].id){
+              this.cartItems[j] = res[i]
+              break
+            }
+          }
+        }
+      }
+    )
+
+    
+
+    
+
   }
 
   closeOverlay(){
@@ -63,24 +99,20 @@ export class CartComponent implements OnInit, AfterContentInit {
 
   checkout(){
     if (localStorage.getItem("userName") && localStorage.getItem("userName") != ""){
-      this.cartItemsService.checkoutCartItems(localStorage.getItem("userName")).subscribe(
+      this.cartItemsService.checkoutCartItems(this.cartItemsForCheckOut).subscribe(
         (res: any) => {
-          console.log("checkout working")
-          if (res) {
-            console.log(res)
-            if (res.length == 0) {
-              this.displaySnackBar("sorry payment gateway hasn't been implemented yet")
-            } else {
-              this.unavailableCartItems = res
-              this.cartItemsService.unavailableCartItems.next(1)
-            }
+          if (res.length == 0){
+            this.displaySnackBar("sorry payment gateway is not implemented yet")
+          } else {
+            this.cartItemsService.reRenderCartItemsSubject.next(res)
           }
-        },
-        (error: any) => {
-          this.displaySnackBar("checkout service currently unavailable")
-          console.log(error)
+        }, (error: any) => {
+          this.displaySnackBar("checkout service is unavailable at the moment")
         }
       )
+      
+      
+      
 
     }
   }

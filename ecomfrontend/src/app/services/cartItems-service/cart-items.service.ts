@@ -10,12 +10,18 @@ export class CartItemsService {
   addItemsToCartUrl: string = "http://localhost:8081/cartItem/addCartItemByCustomerIdAndProductId"
   getCartItemsByCustomerUserNameUrl: string = "http://localhost:8081/cartItem/getCartItemsByCustomerUserName"
   removeCartItemsByCartItemIdUrl: string = "http://localhost:8081/cartItem/removeCartItemByCartItemId"
-  checkoutCartItemByUserNameUrl: string = "http://localhost:8081/cartItem/checkoutCartItemByCustomerUserName"
+  checkoutCartItemByCartItemsListUrl: string = "http://localhost:8081/cartItem/checkoutCartItemByCartItemsList"
 
 
   sendCartItemCount = new Subject()
   decreaseFromCartItemsCount = new Subject()
   unavailableCartItems = new Subject()
+  // getCartItemSubject = new Subject()
+  // sendCartItemSubject = new Subject()
+  addCartItemSubject = new Subject()
+  removeCartItemSubject = new Subject()
+  reRenderCartItemsSubject = new Subject()
+
 
   constructor(private http: HttpClient) { }
 
@@ -42,8 +48,9 @@ export class CartItemsService {
     return this.http.delete(this.removeCartItemsByCartItemIdUrl + "?cartItemId="+ cartItemId);
   }
 
-  checkoutCartItems(userName: any){
-    return this.http.post(this.checkoutCartItemByUserNameUrl,{"userName": userName});
+  checkoutCartItems(cartItems: any){
+    console.log("cartItems to checkout", cartItems)
+    return this.http.post(this.checkoutCartItemByCartItemsListUrl,{"cartItemList": cartItems});
   }
 
 }

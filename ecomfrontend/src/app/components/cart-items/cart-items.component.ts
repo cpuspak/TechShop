@@ -1,8 +1,10 @@
-import { AfterContentInit, Component, Input, OnInit } from '@angular/core';
+import { AfterContentInit, Component, Input, OnInit, Output } from '@angular/core';
 import { CartItem } from '../../interfaces/CartItem';
 import { CartItemsService } from 'src/app/services/cartItems-service/cart-items.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import { EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-cart-items',
@@ -15,6 +17,9 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
   numberOfItems: any;
   messageOfUnavailabilty: any;
   @Input() cartItem!: CartItem;
+  checkboxId: string = " checkbox"
+  checked: boolean = false
+  
   constructor(private cartItemsService: CartItemsService,
     private snackBar: MatSnackBar,
     private cartItemService: CartItemsService) { }
@@ -22,6 +27,7 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
   ngOnInit(): void {
     console.log(this.cartItem)
     if (this.cartItem && this.cartItem.noOfUnits) this.numberOfItems = this.cartItem.noOfUnits
+    if (this.cartItem && this.cartItem.id) this.checkboxId = this.cartItem.id+this.checkboxId
   }
 
   ngAfterContentInit(): void {
@@ -32,6 +38,8 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
           else this.messageOfUnavailabilty = ""
         }
       )
+
+      
   }
 
   deleteCartItem(event: any){
@@ -54,6 +62,17 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
           this.displaySnackBar("error removing item from cart");
         }
       )
+    }
+  }
+
+  insertOrRemoveFromBuyList(event: any){
+    console.log(event)
+    this.checked = !this.checked
+    console.log(this.checked)
+    if (this.checked){
+      this.cartItemService.addCartItemSubject.next(this.cartItem)
+    } else {
+      this.cartItemService.removeCartItemSubject.next(this.cartItem)
     }
   }
 
