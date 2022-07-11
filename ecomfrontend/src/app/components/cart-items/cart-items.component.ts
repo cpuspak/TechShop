@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, Input, OnInit, Output } from '@angular/core';
+import { AfterContentInit, Component, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { CartItem } from '../../interfaces/CartItem';
 import { CartItemsService } from 'src/app/services/cartItems-service/cart-items.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,8 +21,7 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
   checked: boolean = false
   
   constructor(private cartItemsService: CartItemsService,
-    private snackBar: MatSnackBar,
-    private cartItemService: CartItemsService) { }
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     console.log(this.cartItem)
@@ -31,7 +30,7 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-      this.cartItemService.unavailableCartItems.subscribe(
+      this.cartItemsService.unavailableCartItems.subscribe(
         (res: any) => {
           if (res == 1)
             this.messageOfUnavailabilty = "so much stock is not available for this item, please try to reduce stock size and try to checkout"
@@ -48,10 +47,10 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
         (res: any) => {
           if (res) {
             //console.log(res)
-            this.cartItemService.getCartItemsCountByCustomerUserName(localStorage.getItem("userName")).subscribe(
+            this.cartItemsService.getCartItemsCountByCustomerUserName(localStorage.getItem("userName")).subscribe(
               (res1: any) => {
                 console.log(res1)
-                this.cartItemService.sendCartItemCount.next(res1)
+                this.cartItemsService.sendCartItemCount.next(res1)
                 this.displaySnackBar("Item removed from cart")
               }
             )
@@ -70,9 +69,9 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
     this.checked = !this.checked
     console.log(this.checked)
     if (this.checked){
-      this.cartItemService.addCartItemSubject.next(this.cartItem)
+      this.cartItemsService.addCartItemSubject.next(this.cartItem)
     } else {
-      this.cartItemService.removeCartItemSubject.next(this.cartItem)
+      this.cartItemsService.removeCartItemSubject.next(this.cartItem)
     }
   }
 
@@ -80,5 +79,10 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
 
   displaySnackBar(message: string){
     this.snackBar.open(message, "Close", {duration : 2000})
+  }
+
+  displayChange(curCartItem: any){
+    console.log(curCartItem)
+    this.cartItemsService.updatePriceSubject.next(curCartItem)
   }
 }

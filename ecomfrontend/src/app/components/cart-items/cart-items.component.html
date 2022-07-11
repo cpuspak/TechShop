@@ -18,7 +18,7 @@
         <div>
             Adjust Quantity:
         </div>
-        <input matInput type="number" min="1" [(ngModel)]="cartItem.noOfUnits" [formControl]="numberOfItemsValidator">
+        <input matInput type="number" min="1" [(ngModel)]="cartItem.noOfUnits" [formControl]="numberOfItemsValidator" (ngModelChange)="displayChange(cartItem)">
         <mat-error *ngIf="numberOfItemsValidator.hasError('min') || numberOfItemsValidator.hasError('required')">
             Please add valid no of items
         </mat-error>

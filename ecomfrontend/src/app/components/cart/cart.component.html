@@ -7,6 +7,8 @@
     </div>
 </div>
 
-
-<button (click) = "checkout()">checkout</button>
+<div>
+    Total: {{totalPriceForCheckout}}
+</div>
+<button (click) = "checkout()" [disabled]="!(cartItemsForCheckOut && cartItemsForCheckOut.length && cartItemsForCheckOut.length > 0)">checkout</button>
 <button (click) = "closeOverlay()">X</button>
