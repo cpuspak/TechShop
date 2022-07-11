@@ -2,6 +2,7 @@ package com.ecommercestore.tech.controller;
 
 
 import com.ecommercestore.tech.model.CartItem;
+import com.ecommercestore.tech.model.CartItemList;
 import com.ecommercestore.tech.model.UserNameClass;
 import com.ecommercestore.tech.services.CartItemService;
 import com.ecommercestore.tech.services.CustomerService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ecommercestore.tech.model.CartItemAdd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -55,12 +57,12 @@ public class CartItemController {
         return ResponseEntity.ok().body(cartItem);
     }
 
-    @PostMapping("/checkoutCartItemByCustomerUserName")
-    ResponseEntity<?> checkoutCartItemsByCustomerUserName(@RequestBody UserNameClass userNameObj){
+    @PostMapping("/checkoutCartItemByCartItemsList")
+    ResponseEntity<?> checkoutCartItemsByCustomerUserName(@RequestBody CartItemList cartItemList){
         try{
-            System.out.println(userNameObj.toString());
-            List<Long> invalidCartItemIds = this.cartItemService.checkoutCartItemByCustomerUserName(userNameObj.getUserName());
-            return ResponseEntity.ok().body(invalidCartItemIds);
+            System.out.println(cartItemList);
+            List<CartItem> returnCartItems = this.cartItemService.checkoutCartItemByCartItemsList(cartItemList.getCartItemList());
+            return ResponseEntity.ok().body(returnCartItems);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("internal server error");
         }

@@ -113,21 +113,26 @@ public class CartItemService {
         return cartItem;
     }
 
-    public List<Long> checkoutCartItemByCustomerUserName(String customerUserName){
-        List<Long> invalidCartItemIds = new ArrayList<>();
-        Customer customer = customerRepository.findByUserName(customerUserName);
+    public List<CartItem> checkoutCartItemByCartItemsList(List<CartItem> cartItemList) throws Exception{
 
-        List<CartItem> cartItemsWithUserId = this.cartItemRepository.findByCustomerId(customer.getId());
-
-        for(int i = 0 ; i < cartItemsWithUserId.size() ; i++){
-            CartItem tempCartItem = cartItemsWithUserId.get(i);
+        List<CartItem> cartItemsReturnList = new ArrayList<>();
+        for(int i = 0 ; i < cartItemList.size() ; i++) {
+            CartItem tempCartItem = cartItemList.get(i);
             Product tempProduct = tempCartItem.getProduct();
+            System.out.println(tempCartItem.getNoOfUnits());
+            System.out.println(tempProduct.getAvailableUnits());
             if (tempCartItem.getNoOfUnits() > tempProduct.getAvailableUnits()) {
-                invalidCartItemIds.add(tempCartItem.getId());
+                tempCartItem.setInvalidNoOfItems(1);
                 System.out.println(tempProduct.getName());
+                cartItemsReturnList.add(tempCartItem);
             }
         }
-        return invalidCartItemIds;
+
+        return cartItemsReturnList;
+//        List<CartItem> emptyList = new ArrayList<>();
+//        if (flag == 1)
+//            return cartItemsReturnList;
+//        else return emptyList;
     }
 
 }

@@ -23,6 +23,8 @@ public class CartItem {
     @JoinColumn(name="customerId", referencedColumnName = "id")
     private Customer customer;
 
+    private int invalidNoOfItems = 0;
+
     public CartItem(){}
 
     public CartItem(long noOfUnits, Product product, Customer customer) {
@@ -31,11 +33,23 @@ public class CartItem {
         this.customer = customer;
     }
 
+    public CartItem(long id, long noOfUnits, Product product, Customer customer, int invalidNoOfItems) {
+        this.id = id;
+        this.noOfUnits = noOfUnits;
+        this.product = product;
+        this.customer = customer;
+        this.invalidNoOfItems = invalidNoOfItems;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public void setInvalidNoOfItems(int isInvalidNoOfItems){
+        this.invalidNoOfItems = isInvalidNoOfItems;
     }
 }
