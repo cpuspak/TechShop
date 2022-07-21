@@ -1,0 +1,8 @@
+<div>
+    <span>Filter By Price:</span>
+    <span>Min:</span>
+    <input #minValue type="text" name="filterByPriceMin">
+    <span>Max:</span>
+    <input #maxValue type="text" name="filterByPriceMax">
+    <input type="button" value="filter" (click)="filterClick(minValue.value, maxValue.value)">
+</div>

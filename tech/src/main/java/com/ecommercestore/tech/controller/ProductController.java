@@ -31,4 +31,10 @@ public class ProductController {
     ResponseEntity<?> getProductByProductCategoryName(@RequestParam String productCategoryName){
         return ResponseEntity.ok().body(productService.getProductByProductCategryName(productCategoryName));
     }
+
+    @GetMapping("/getByProductCategoryNameAndPrice")
+    ResponseEntity<?> getProductByProductCategoryNameAndPrice(@RequestParam String productCategoryName, @RequestParam float minPrice, @RequestParam float maxPrice){
+        return ResponseEntity.ok().body(productService.getProductByProductCategryNameAndPrice(productCategoryName, minPrice, maxPrice));
+    }
+
 }

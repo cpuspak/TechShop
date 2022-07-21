@@ -7,6 +7,7 @@ import com.ecommercestore.tech.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +35,15 @@ public class ProductService {
 
     public List<Product> getProductByProductCategryName(String productCategoryName){
         ProductCategories productCategories = productCategoriesRepository.findByName(productCategoryName);
-        System.out.println(productCategories.toString());
-        System.out.println(this.getProductByProductCategory(productCategories.getId()));
         return this.getProductByProductCategory(productCategories.getId());
+    }
+
+    public List<Product> getProductByProductCategryNameAndPrice(String productCategoryName, float minPrice, float maxPrice){
+        ProductCategories productCategories = productCategoriesRepository.findByName(productCategoryName);
+        if (minPrice == -1) return  productRepository.findByProductCategoriesAndMaxPrice(productCategories.getId(), maxPrice);
+        else if (maxPrice == -1) return productRepository.findByProductCategoriesAndMinPrice(productCategories.getId(), minPrice);
+        else return productRepository.findByProductCategoriesAndPrice(productCategories.getId(), minPrice, maxPrice);
+
     }
 
 }

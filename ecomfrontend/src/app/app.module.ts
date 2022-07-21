@@ -29,6 +29,7 @@ import { ItemTileComponent } from './components/item-tile/item-tile.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartItemsComponent } from './components/cart-items/cart-items.component';
+import { FilterByPriceComponent } from './components/filter-by-price/filter-by-price.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CartItemsComponent } from './components/cart-items/cart-items.component
     RegisterComponentComponent,
     CustomerDashboardComponent,
     ItemTileComponent,
-    CartItemsComponent
+    CartItemsComponent,
+    FilterByPriceComponent
   ],
   imports: [
     BrowserModule,
