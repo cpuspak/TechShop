@@ -8,5 +8,6 @@ export class FilterByPriceService {
 
 
   filterClick = new Subject();
+  clearFilterClick = new Subject();
   constructor() { }
 }

@@ -1,8 +1,10 @@
 <div>
     <span>Filter By Price:</span>
     <span>Min:</span>
-    <input #minValue type="text" name="filterByPriceMin">
+    <input matInput #minValue type="text" name="filterByPriceMin" [formControl]="noOfItemsValidatorMin" [(ngModel)]="minValueVar">
     <span>Max:</span>
-    <input #maxValue type="text" name="filterByPriceMax">
-    <input type="button" value="filter" (click)="filterClick(minValue.value, maxValue.value)">
+    <input matInput #maxValue type="text" name="filterByPriceMax" [formControl]="noOfItemsValidatorMax" [(ngModel)]="maxValueVar">
+    <input type="button" value="filter" (click)="filterClick(minValue.value, maxValue.value)" [disabled]="(noOfItemsValidatorMin.hasError('required') && noOfItemsValidatorMax.hasError('required')) || (noOfItemsValidatorMin.hasError('pattern') && !noOfItemsValidatorMin.hasError('required')) || (noOfItemsValidatorMax.hasError('pattern') && !noOfItemsValidatorMax.hasError('required'))">
+    <input type="button" value="clearFilter" (click)="clearFilterClick()">
+    <span *ngIf="displayFilterMinValue != '' && displayFilterMaxValue != ''">Filter set : {{displayFilterMinValue}} - {{displayFilterMaxValue}}</span>
 </div>
