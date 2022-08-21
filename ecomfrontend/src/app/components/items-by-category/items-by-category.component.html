@@ -11,7 +11,7 @@
 </div>
 
 <div *ngIf="products != null && products.length > 0">
-    <div *ngFor="let element of products">
+    <div *ngFor="let element of products"  class="products">
         <app-item-tile [product]="element"></app-item-tile>
     </div>
 </div>

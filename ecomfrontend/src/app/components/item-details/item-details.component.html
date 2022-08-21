@@ -1,3 +1,6 @@
+<div *ngIf="productDetails && productDetails.image">
+    <img src="{{productDetails.image}}" alt="sampleImage">
+</div>
 <div *ngIf="productDetails && productDetails.id">
     {{productDetails.id}}
 </div>
@@ -7,9 +10,7 @@
 <div *ngIf="productDetails && productDetails.price">
     {{productDetails.price}}
 </div>
-<div *ngIf="productDetails && productDetails.image">
-    {{productDetails.image}}
-</div>
+
 <div *ngIf="productDetails && productDetails.description">
     {{productDetails.description}}
 </div>

@@ -1,11 +1,10 @@
-<p>cart-items works!</p>
 <mat-card class="cartCard">
     <mat-card-header>
         <input type="checkbox" id={{checkboxId}}  ng-model="checked" (click)="insertOrRemoveFromBuyList($event)"/>
         <mat-card-title>{{cartItem.product.name}}</mat-card-title>
         <mat-card-subtitle>{{cartItem.product.productCategories.name}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <img mat-card-image src={{cartItem.product.image}} alt="Photo of a Shiba Inu">
       <mat-card-content>
         <p>
           {{cartItem.product.description}}

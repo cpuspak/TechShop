@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FilterByPriceService } from 'src/app/services/filter-by-price-service/filter-by-price.service';
 import { FilterByPrice } from 'src/app/interfaces/FilterByPrice';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
@@ -8,7 +8,7 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/form
   templateUrl: './filter-by-price.component.html',
   styleUrls: ['./filter-by-price.component.css']
 })
-export class FilterByPriceComponent implements OnInit {
+export class FilterByPriceComponent implements OnInit, AfterViewInit {
   noOfItemsValidatorMin = new FormControl('',[Validators.required, Validators.pattern('[0-9]*[\.]?[0-9]+')])
   noOfItemsValidatorMax = new FormControl('',[Validators.required, Validators.pattern('[0-9]*[\.]?[0-9]+')])
   displayFilterMinValue: string = ""
@@ -22,6 +22,15 @@ export class FilterByPriceComponent implements OnInit {
   
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    this.filterByPriceService.newCategoryClick.subscribe((val: any) => {
+      this.displayFilterMaxValue = ""
+      this.displayFilterMinValue = ""
+      this.minValueVar = ""
+      this.maxValueVar = ""
+    })
   }
 
   filterClick(minValue: string, maxValue: string) {

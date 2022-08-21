@@ -7,8 +7,10 @@
     </div>
 </div>
 
-<div>
+<div class="totalPrice">
     Total: {{totalPriceForCheckout}}
 </div>
-<button (click) = "checkout()" [disabled]="!(cartItemsForCheckOut && cartItemsForCheckOut.length && cartItemsForCheckOut.length > 0)">checkout</button>
-<button (click) = "closeOverlay()">X</button>
+<div class="actions">
+    <button (click) = "checkout()" [disabled]="!(cartItemsForCheckOut && cartItemsForCheckOut.length && cartItemsForCheckOut.length > 0)">checkout</button>
+    <button (click) = "closeOverlay()">X</button>
+</div>

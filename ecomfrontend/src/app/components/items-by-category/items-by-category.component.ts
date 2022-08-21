@@ -26,6 +26,17 @@ export class ItemsByCategoryComponent implements OnInit, DoCheck, AfterContentIn
   }
 
   ngAfterContentInit(): void {
+      // this.filterByPriceService.filterClick.subscribe((val: any) => {
+      //   this.productService.getProductsByCategoryNameAndPrice(this.category, val.minValue, val.maxValue).subscribe(
+      //     (val1: any) => {
+      //       console.log("val1",val1)
+      //       //if (val1.length > 0) 
+      //       this.products = val1;
+      //   }, err => {
+      //     console.log("error getting filtered data")
+      //   })
+      // })
+
       this.filterByPriceService.filterClick.subscribe((val: any) => {
         this.productService.getProductsByCategoryNameAndPrice(this.category, val.minValue, val.maxValue).subscribe(
           (val1: any) => {
@@ -54,6 +65,8 @@ export class ItemsByCategoryComponent implements OnInit, DoCheck, AfterContentIn
     this.productService
   }
 
+
+
   fetchProducts() {
     this.productCategoryService.selectedCategory.subscribe(
       (res:any) => {
@@ -61,7 +74,8 @@ export class ItemsByCategoryComponent implements OnInit, DoCheck, AfterContentIn
         this.productService.getProductsByCategoryName(this.category).subscribe(
           (res: any) => {
             this.products = res
-            console.log(res)
+            //console.log(res)
+            this.filterByPriceService.newCategoryClick.next(0);
           },
           err => {
             console.log("error getting products by product category", err)
