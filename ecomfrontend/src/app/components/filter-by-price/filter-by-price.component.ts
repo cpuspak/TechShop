@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FilterByPriceService } from 'src/app/services/filter-by-price-service/filter-by-price.service';
 import { FilterByPrice } from 'src/app/interfaces/FilterByPrice';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-filter-by-price',
@@ -13,6 +14,7 @@ export class FilterByPriceComponent implements OnInit, AfterViewInit {
   noOfItemsValidatorMax = new FormControl('',[Validators.required, Validators.pattern('[0-9]*[\.]?[0-9]+')])
   displayFilterMinValue: string = ""
   displayFilterMaxValue: string = ""
+  panelOpenState = false
 
   minValueVar: string = ""
   maxValueVar: string = ""

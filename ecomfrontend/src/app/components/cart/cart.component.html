@@ -1,16 +1,22 @@
-<p>cart works!</p>
 
-<div *ngIf="cartItems != null && cartItems.length > 0">
-    <div *ngFor="let element of cartItems">
-        
-        <app-cart-items [cartItem]="element"></app-cart-items>
+<button mat-icon-button color="warn" (click) = "closeOverlay()" style="float: right; z-index: 1;">X</button>
+<div *ngIf="cartItems == null || (cartItems != null && cartItems.length == 0)">
+    You don't have anything added to cart, please browse the store and add something you like and come back to buy it. Thanks!
+</div>
+<div *ngIf="cartItems != null && cartItems.length > 0" style="margin-top: 50px;">
+    <div *ngIf="cartItems != null && cartItems.length > 0">
+        <div *ngFor="let element of cartItems">
+            <app-cart-items [cartItem]="element"></app-cart-items>
+        </div>
+    </div>
+    
+    <div class="totalPrice">
+        Total: {{totalPriceForCheckout}}
+    </div>
+    <div class="actions">
+        <button mat-raised-button color="primary" (click) = "checkout()" [disabled]="!(cartItemsForCheckOut && cartItemsForCheckOut.length && cartItemsForCheckOut.length > 0)">checkout</button>
     </div>
 </div>
 
-<div class="totalPrice">
-    Total: {{totalPriceForCheckout}}
-</div>
-<div class="actions">
-    <button (click) = "checkout()" [disabled]="!(cartItemsForCheckOut && cartItemsForCheckOut.length && cartItemsForCheckOut.length > 0)">checkout</button>
-    <button (click) = "closeOverlay()">X</button>
-</div>
+
+

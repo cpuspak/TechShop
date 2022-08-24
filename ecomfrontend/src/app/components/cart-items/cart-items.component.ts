@@ -46,7 +46,8 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
       this.cartItemsService.removeItemsFromCart(event.target.id).subscribe(
         (res: any) => {
           if (res) {
-            //console.log(res)
+            //this.cartItemsService.removeCartItemSubject.next(res)
+            console.log("from deleteCartItem",res)
             this.cartItemsService.getCartItemsCountByCustomerUserName(localStorage.getItem("userName")).subscribe(
               (res1: any) => {
                 console.log(res1)

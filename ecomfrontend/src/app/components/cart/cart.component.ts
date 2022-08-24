@@ -73,6 +73,7 @@ export class CartComponent implements OnInit, AfterContentInit {
           }
         }
         console.log("updated cart", this.cartItemsForCheckOut)
+        console.log(res)
         this.totalPriceForCheckout -= (res.noOfUnits*res.product.price)
       }
     )

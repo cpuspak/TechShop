@@ -98,8 +98,7 @@ export class TopbarComponent implements OnInit, AfterContentInit {
 
   showCart() {
     const dialogRef = this.dialog.open(CartComponent, {
-      width: '2500px',
-      height: '1500px'
+      maxHeight: '90vh'
     });
   }
 

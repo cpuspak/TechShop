@@ -1,10 +1,22 @@
-<div>
-    <span>Filter By Price:</span>
-    <span>Min:</span>
-    <input matInput #minValue type="text" name="filterByPriceMin" [formControl]="noOfItemsValidatorMin" [(ngModel)]="minValueVar">
-    <span>Max:</span>
-    <input matInput #maxValue type="text" name="filterByPriceMax" [formControl]="noOfItemsValidatorMax" [(ngModel)]="maxValueVar">
-    <input type="button" value="filter" (click)="filterClick(minValue.value, maxValue.value)" [disabled]="(noOfItemsValidatorMin.hasError('required') && noOfItemsValidatorMax.hasError('required')) || (noOfItemsValidatorMin.hasError('pattern') && !noOfItemsValidatorMin.hasError('required')) || (noOfItemsValidatorMax.hasError('pattern') && !noOfItemsValidatorMax.hasError('required'))">
-    <input type="button" value="clearFilter" (click)="clearFilterClick()">
-    <span *ngIf="displayFilterMinValue != '' && displayFilterMaxValue != ''">Filter set : {{displayFilterMinValue}} - {{displayFilterMaxValue}}</span>
-</div>
+
+<mat-expansion-panel (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Filter Items
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div>
+        <span>Filter By Price:</span><br><br>
+        <span>Min:</span>
+        <input matInput #minValue type="text" name="filterByPriceMin" [formControl]="noOfItemsValidatorMin" [(ngModel)]="minValueVar"><br><br>
+        <span>Max:</span>
+        <input matInput #maxValue type="text" name="filterByPriceMax" [formControl]="noOfItemsValidatorMax" [(ngModel)]="maxValueVar"><br><br>
+        <button mat-raised-button (click)="filterClick(minValue.value, maxValue.value)" [disabled]="(noOfItemsValidatorMin.hasError('required') && noOfItemsValidatorMax.hasError('required')) || (noOfItemsValidatorMin.hasError('pattern') && !noOfItemsValidatorMin.hasError('required')) || (noOfItemsValidatorMax.hasError('pattern') && !noOfItemsValidatorMax.hasError('required'))" style="margin: 5px;">Filter</button>
+        <button mat-raised-button (click)="clearFilterClick()" style="margin: 5px;">Clear Filter</button><br><br>
+        <span *ngIf="displayFilterMinValue != '' && displayFilterMaxValue != ''">Filter set : {{displayFilterMinValue}} - {{displayFilterMaxValue}}</span>
+    </div>
+    
+</mat-expansion-panel>
+
+

@@ -4,17 +4,15 @@
     </mat-grid-list>
 </div>
 -->
-
-<div *ngIf="category != ''">
-    <h3>Selected Category > {{category}}</h3>
-    <app-filter-by-price></app-filter-by-price>
-</div>
-
-<div *ngIf="products != null && products.length > 0">
-    <div *ngFor="let element of products"  class="products">
-        <app-item-tile [product]="element"></app-item-tile>
+<div style="max-height: 90vh; overflow: auto;">
+    <div *ngIf="category != ''" style="padding: 10px;">
+        <h3>Category : {{category}}</h3>
+        <app-filter-by-price></app-filter-by-price>
+    </div>
+    
+    <div *ngIf="products != null && products.length > 0">
+        <div *ngFor="let element of products"  class="products">
+            <app-item-tile [product]="element"></app-item-tile>
+        </div>
     </div>
 </div>
-
-
-

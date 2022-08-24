@@ -1,33 +1,45 @@
 <mat-card class="cartCard">
-    <mat-card-header>
-        <input type="checkbox" id={{checkboxId}}  ng-model="checked" (click)="insertOrRemoveFromBuyList($event)"/>
-        <mat-card-title>{{cartItem.product.name}}</mat-card-title>
-        <mat-card-subtitle>{{cartItem.product.productCategories.name}}</mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-image src={{cartItem.product.image}} alt="Photo of a Shiba Inu">
-      <mat-card-content>
-        <p>
-          {{cartItem.product.description}}
-        </p>
-        <p>
-          Price: {{cartItem.product.price}}
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <div>
-            Adjust Quantity:
-        </div>
-        <input matInput type="number" min="1" [(ngModel)]="cartItem.noOfUnits" [formControl]="numberOfItemsValidator" (ngModelChange)="displayChange(cartItem)">
-        <mat-error *ngIf="numberOfItemsValidator.hasError('min') || numberOfItemsValidator.hasError('required')">
-            Please add valid no of items
-        </mat-error>
-        <br>
-        <mat-error *ngIf="cartItem.invalidNoOfItems">
-            so much stock for this item is not available
-        </mat-error>
-        <div *ngIf="!numberOfItemsValidator.hasError('min') && !numberOfItemsValidator.hasError('required')">
-            Subtotal = {{cartItem.noOfUnits*cartItem.product.price}}
-        </div>
-        <button (click)="deleteCartItem($event)" id={{cartItem.id}}>Remove Item from cart</button>
-      </mat-card-actions>
+  <mat-card-header>
+      
+    <mat-card-title>
+      <input type="checkbox" id={{checkboxId}} style="margin-right: 10px; float: left;"  ng-model="checked" (click)="insertOrRemoveFromBuyList($event)"/>
+      <p style="margin-left: 10px; float: left;">
+        {{cartItem.product.name}}
+      </p>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <p style="float: left; margin-left: 20px;">
+        {{cartItem.product.productCategories.name}}
+      </p>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src={{cartItem.product.image}} alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <p>
+      {{cartItem.product.description}}
+    </p>
+    <p>
+      Price: {{cartItem.product.price}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <div style="text-align: right;">
+      <div style="padding-right: 10px; padding-bottom: 5px;">
+        Adjust Quantity:
+      </div>
+      <input matInput type="number" min="1" [(ngModel)]="cartItem.noOfUnits" [formControl]="numberOfItemsValidator" (ngModelChange)="displayChange(cartItem)">
+      <br>
+      <mat-error *ngIf="numberOfItemsValidator.hasError('min') || numberOfItemsValidator.hasError('required')">
+          Please add valid no of items
+      </mat-error>
+      <br>
+      <mat-error *ngIf="cartItem.invalidNoOfItems">
+          so much stock for this item is not available
+      </mat-error>
+      <div *ngIf="!numberOfItemsValidator.hasError('min') && !numberOfItemsValidator.hasError('required')" style="padding-right: 10px; padding-bottom:5px">
+          Subtotal = {{cartItem.noOfUnits*cartItem.product.price}}
+      </div>
+      <button mat-button color="warn" (click)="deleteCartItem($event)" id={{cartItem.id}}>Remove Item</button>
+    </div>
+  </mat-card-actions>
 </mat-card>

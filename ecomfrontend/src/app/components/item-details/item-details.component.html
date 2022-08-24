@@ -1,31 +1,33 @@
+<button mat-icon-button color="warn" (click)="closeOverlay()" style="float: right;">X</button>
+<div *ngIf="productDetails && productDetails.name">
+    Product Name : {{productDetails.name}}
+</div>
 <div *ngIf="productDetails && productDetails.image">
     <img src="{{productDetails.image}}" alt="sampleImage">
 </div>
-<div *ngIf="productDetails && productDetails.id">
-    {{productDetails.id}}
-</div>
-<div *ngIf="productDetails && productDetails.name">
-    {{productDetails.name}}
-</div>
-<div *ngIf="productDetails && productDetails.price">
-    {{productDetails.price}}
-</div>
 
-<div *ngIf="productDetails && productDetails.description">
-    {{productDetails.description}}
+
+<div *ngIf="productDetails && productDetails.description" style="padding: 10px;">
+    Product Description : {{productDetails.description}}
 </div>
-<input matInput type="number" min="1" [(ngModel)]="numberOfItems" [formControl]="numberOfItemsValidator">
-<mat-error *ngIf="numberOfItemsValidator.hasError('min') || numberOfItemsValidator.hasError('required')">
-    Please add valid no of items
-</mat-error>
-<div>
-    Total Price:
-    <span
-        *ngIf="productDetails != undefined && productDetails.price != undefined && numberOfItems != undefined && !numberOfItemsValidator.hasError('min') && !numberOfItemsValidator.hasError('required')">
-        {{productDetails.price * numberOfItems}}
-    </span>
+<div *ngIf="productDetails && productDetails.price" style="padding: 10px;">
+    Price : {{productDetails.price}}
 </div>
-<button (click)="addToCart()"
-    [disabled]="numberOfItemsValidator.hasError('min') || numberOfItemsValidator.hasError('required')">Add to
-    cart</button>
-<button (click)="closeOverlay()">X</button>
+<div style="float: right; padding-right: 100px;">
+    <input matInput type="number" min="1" [(ngModel)]="numberOfItems" [formControl]="numberOfItemsValidator">
+    <br>
+    <mat-error *ngIf="numberOfItemsValidator.hasError('min') || numberOfItemsValidator.hasError('required')">
+        Please add valid no of items
+    </mat-error>
+    <div style="padding: 10px;">
+        Total Price:
+        <span
+            *ngIf="productDetails != undefined && productDetails.price != undefined && numberOfItems != undefined && !numberOfItemsValidator.hasError('min') && !numberOfItemsValidator.hasError('required')">
+            {{productDetails.price * numberOfItems}}
+        </span>
+    </div>
+    <button mat-stroked-button color="accent" (click)="addToCart()"
+        [disabled]="numberOfItemsValidator.hasError('min') || numberOfItemsValidator.hasError('required')">Add to
+        cart</button>
+
+</div>

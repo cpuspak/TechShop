@@ -30,6 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartItemsComponent } from './components/cart-items/cart-items.component';
 import { FilterByPriceComponent } from './components/filter-by-price/filter-by-price.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -66,7 +67,9 @@ import { FilterByPriceComponent } from './components/filter-by-price/filter-by-p
     MatListModule,
     MatGridListModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
