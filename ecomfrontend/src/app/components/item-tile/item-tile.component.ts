@@ -24,7 +24,8 @@ export class ItemTileComponent implements OnInit {
     if (event && event.target && event.target.id != ""){
       const dialogRef = this.dialog.open(ItemDetailsComponent, {
         
-        data: {productId: event.target.id}
+        data: {productId: event.target.id},
+        maxHeight: '90vh'
       });
     }
     
