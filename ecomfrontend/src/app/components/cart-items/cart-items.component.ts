@@ -52,6 +52,8 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
               (res1: any) => {
                 console.log(res1)
                 this.cartItemsService.sendCartItemCount.next(res1)
+                //this.cartItemsService.removeCartItemSubject.next(res)
+                this.cartItemsService.resetCartSubject.next(0)
                 this.displaySnackBar("Item removed from cart")
               }
             )

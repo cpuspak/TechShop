@@ -15,4 +15,7 @@
             <app-item-tile [product]="element"></app-item-tile>
         </div>
     </div>
+    <div *ngIf="products == null || products.length == 0" class="frontPage mat-elevation-z4">
+        <span>Welcome to the TechShop ! You can browse products from several categories in left drawer</span>
+    </div>
 </div>

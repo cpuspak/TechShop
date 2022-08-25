@@ -1,5 +1,7 @@
 img {
+    align-self: center;
     height: 500px;
-    width: 500px;
+    max-width: 70vw;
+
 }
 

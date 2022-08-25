@@ -36,6 +36,7 @@ export class CartComponent implements OnInit, AfterContentInit {
           this.cartItemsService.getCartItemsByCustomerUserName(localStorage.getItem("userName")).subscribe(
             (res1: any) => {
               if (res1) this.cartItems = res1
+              console.log("this.cartItemsForCheckout = ",this.cartItemsForCheckOut)
             }
           )
         }
@@ -66,6 +67,7 @@ export class CartComponent implements OnInit, AfterContentInit {
 
     this.cartItemsService.removeCartItemSubject.subscribe(
       (res: any) => {
+        if (this.cartItemsForCheckOut == undefined || this.cartItemsForCheckOut.length == 0) return;
         for(let i = 0 ; i < this.cartItemsForCheckOut.length ; i++){
           if (this.cartItemsForCheckOut[i].id == res.id) {
             this.cartItemsForCheckOut.splice(i,1)
@@ -90,6 +92,18 @@ export class CartComponent implements OnInit, AfterContentInit {
         }
       }
     )
+
+    this.cartItemsService.resetCartSubject.subscribe((res: any) => {
+      this.totalPriceForCheckout = 0
+      this.cartItemsForCheckOut = []
+      if (localStorage.getItem("userName") && localStorage.getItem("userName") != ""){
+        this.cartItemsService.getCartItemsByCustomerUserName(localStorage.getItem("userName")).subscribe(
+          (res1: any) => {
+            if (res1) this.cartItems = res1;
+          }
+        )
+      }
+    })
 
     // this.cartItemsService.reRenderCartItemsSubject.subscribe(
     //   (res: any) => {

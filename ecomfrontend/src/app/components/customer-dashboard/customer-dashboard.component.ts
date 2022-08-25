@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
@@ -6,6 +7,7 @@ import { LoginCustomerService } from 'src/app/services/login-customer-service/lo
 import { ProductCategoryService } from 'src/app/services/product-category-service/product-category.service';
 import { SidebarServiceService } from 'src/app/services/sidebar-service/sidebar-service.service';
 import { LoginComponentComponent } from '../login-component/login-component.component';
+
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -20,7 +22,8 @@ export class CustomerDashboardComponent implements OnInit, AfterViewInit {
     private sideBarService: SidebarServiceService,
     private router: Router,
     private dashboardService: DashboardService,
-    private productCategoryService: ProductCategoryService) { }
+    private productCategoryService: ProductCategoryService,
+    private observer: BreakpointObserver) { }
   
   //showTopbar: string = "1"
   // 0 -> list of products according to category
@@ -41,5 +44,11 @@ export class CustomerDashboardComponent implements OnInit, AfterViewInit {
     if (this.snav != undefined){
       this.sideBarService.sideBarSubject.next(this.snav)
     }
+
+    this.observer.observe(['(max-width: 800px)']).subscribe((res: any) => {
+      if (res.matches)
+        this.snav.mode = 'over'
+      else this.snav.mode = 'side'
+    })
   }
 }

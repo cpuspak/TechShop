@@ -22,6 +22,7 @@ export class CartItemsService {
   removeCartItemSubject = new Subject()
   reRenderCartItemsSubject = new Subject()
   updatePriceSubject = new Subject()
+  resetCartSubject = new Subject()
 
 
   constructor(private http: HttpClient) { }
