@@ -1,3 +1,4 @@
+<img *ngIf="loading == true" src="assets/gifs/Rhombus.gif" alt="" style="height: 20px; width: 20px;">
 <button mat-icon-button color="warn" (click)="closeOverlay()" style="float: right;">X</button>
 <div *ngIf="productDetails && productDetails.name">
     Product Name : {{productDetails.name}}
@@ -29,5 +30,6 @@
     <button mat-stroked-button color="accent" (click)="addToCart()"
         [disabled]="numberOfItemsValidator.hasError('min') || numberOfItemsValidator.hasError('required')">Add to
         cart</button>
+    <img *ngIf="addToCartLoading == true" src="assets/gifs/Rhombus.gif" alt="" style="height: 20px; width: 20px;">
 
 </div>

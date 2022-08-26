@@ -19,12 +19,14 @@ export class RegisterComponentComponent implements OnInit {
   address: string = ""
   hide = true
   registrationErr = 0
+  loading: boolean = false
 
   ngOnInit(): void {
     this.registrationErr = 0
   }
 
   doRegister(){
+    this.loading = true;
     var customerRegisterBody = {
       userName: this.userName,
       password: this.password,
@@ -33,10 +35,12 @@ export class RegisterComponentComponent implements OnInit {
     }
     this.registerCustomerService.registerCustomer(customerRegisterBody).subscribe(
       response => {
+        this.loading = false;
         console.log(response)
         this.registrationErr = 1
       },
       error => {
+        this.loading = false
         console.log(error)
         this.registrationErr = 2
       }

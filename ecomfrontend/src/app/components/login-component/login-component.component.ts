@@ -16,7 +16,7 @@ export class LoginComponentComponent implements OnInit {
   password: string = ""
   hide = true;
   loginErr = false;
-
+  loading: boolean = false;
   email = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(
@@ -27,6 +27,7 @@ export class LoginComponentComponent implements OnInit {
   }
 
   login(){
+    this.loading = true;
     var customerCredentials = {
       userName: this.userName,
       password: this.password
@@ -39,15 +40,18 @@ export class LoginComponentComponent implements OnInit {
           this.customerLoginService.loginCustomer(response.jwt, customerCredentials.userName)
           window.location.href = 'dashboard'
           this.loginErr = false
+          this.loading = false;
         },
         error => {
           console.log(error)
           this.loginErr = true
+          this.loading = false;
         }
       );
       
       
-    }
+    } else this.loading = false;
+    
   }
   passwordEmpty(): boolean {
     if (this.password.length == 0) return true;

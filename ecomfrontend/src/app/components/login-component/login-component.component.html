@@ -28,6 +28,9 @@
             <mat-error *ngIf="loginErr">
                 Invalid Email or Password
             </mat-error>
+            <div *ngIf="loading == true">
+                <img src="assets/gifs/Rhombus.gif" alt="">
+            </div>
         </form>
     
     </mat-card>

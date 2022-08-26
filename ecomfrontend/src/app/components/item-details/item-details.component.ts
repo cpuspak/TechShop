@@ -19,6 +19,8 @@ export class ItemDetailsComponent implements OnInit {
   productId: any
   productDetails: any
   numberOfItems: any
+  loading: boolean = false;
+  addToCartLoading: boolean = false;
 
   numberOfItemsValidator = new FormControl('', [Validators.required, Validators.min(1)]);
 
@@ -36,10 +38,12 @@ export class ItemDetailsComponent implements OnInit {
     console.log(this.data.productId)
     
     if (this.data && this.data.productId) {
+      this.loading = true;
       this.productService.getProductByProductId(this.data.productId).subscribe(
         (res: any) => {
           console.log(res)
           this.productDetails = res
+          this.loading = false;
         }
       )
     }
@@ -70,6 +74,7 @@ export class ItemDetailsComponent implements OnInit {
       //     this.cartItemService.sendCartItemCount.next(res)
       //   }
       // )
+      this.addToCartLoading = true
       this.cartItemService.addItemsToCart(localStorage.getItem("userName"), this.data.productId, this.numberOfItems).subscribe(
         (res: any) => {
           console.log("add to cart",res)
@@ -78,6 +83,7 @@ export class ItemDetailsComponent implements OnInit {
               (res1: any) => {
                 this.cartItemService.sendCartItemCount.next(res1)
                 this.displaySnackBar("Items added to cart")
+                this.addToCartLoading = false;
               }
             )
           }
@@ -85,6 +91,7 @@ export class ItemDetailsComponent implements OnInit {
         }, (error : any) => {
           console.log("don't have so much stock")
           this.displaySnackBar("don't have so much stock")
+          this.addToCartLoading = false
         }
       )
     }

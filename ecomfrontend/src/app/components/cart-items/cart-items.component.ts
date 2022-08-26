@@ -19,6 +19,7 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
   @Input() cartItem!: CartItem;
   checkboxId: string = " checkbox"
   checked: boolean = false
+  loading: boolean = false
   
   constructor(private cartItemsService: CartItemsService,
     private snackBar: MatSnackBar) { }
@@ -43,6 +44,7 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
 
   deleteCartItem(event: any){
     if (event && event.target && event.target.id != ""){
+      this.loading = true
       this.cartItemsService.removeItemsFromCart(event.target.id).subscribe(
         (res: any) => {
           if (res) {
@@ -55,13 +57,16 @@ export class CartItemsComponent implements OnInit, AfterContentInit {
                 //this.cartItemsService.removeCartItemSubject.next(res)
                 this.cartItemsService.resetCartSubject.next(0)
                 this.displaySnackBar("Item removed from cart")
+                this.loading = false
               }
             )
             this.displaySnackBar("item removed from cart");
+            this.loading = false
           }
         },
         (error: any) => {
           this.displaySnackBar("error removing item from cart");
+          this.loading = false
         }
       )
     }

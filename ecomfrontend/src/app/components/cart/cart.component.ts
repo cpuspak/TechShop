@@ -19,12 +19,17 @@ export class CartComponent implements OnInit, AfterContentInit {
   cartItems !: Array<CartItem>
   cartItemsForCheckOut !: Array<CartItem>
   totalPriceForCheckout : number = 0
+  loading: boolean = false
   ngOnInit(): void {
+
     if (localStorage.getItem("userName") && localStorage.getItem("userName") != ""){
+      this.loading = true;
       this.cartItemsService.getCartItemsByCustomerUserName(localStorage.getItem("userName")).subscribe(
         (res: any) => {
           if (res) this.cartItems = res
-        }
+          this.loading = false;
+        },
+        err => this.loading = false
       )
     }
   }
