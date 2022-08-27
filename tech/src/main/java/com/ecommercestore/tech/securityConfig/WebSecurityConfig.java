@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/cartItem/getCartItemsByCustomerUserName").permitAll()
                 .antMatchers("/cartItem/removeCartItemByCartItemId").permitAll()
                 .antMatchers("/cartItem/addCartItemByCustomerIdAndProductId").permitAll()
+                .antMatchers("/cartItem/deleteCartItemsByCartItemsList").permitAll()
                 .antMatchers("/cartItem/checkoutCartItemByCartItemsList").permitAll()
                 .antMatchers("/product/getByProductCategoryNameAndPrice").permitAll()
                 .anyRequest().authenticated().and()

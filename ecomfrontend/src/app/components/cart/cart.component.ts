@@ -20,6 +20,7 @@ export class CartComponent implements OnInit, AfterContentInit {
   cartItemsForCheckOut !: Array<CartItem>
   totalPriceForCheckout : number = 0
   loading: boolean = false
+  deleteSelectedLoading: boolean = false
   ngOnInit(): void {
 
     if (localStorage.getItem("userName") && localStorage.getItem("userName") != ""){
@@ -147,6 +148,27 @@ export class CartComponent implements OnInit, AfterContentInit {
     //   )
     // }
   }
+
+  deleteSelectedItems(){
+    console.log("cart items for checkout", this.cartItemsForCheckOut)
+    this.deleteSelectedLoading = true;
+    this.cartItemsService.removeSelectedCartItems(this.cartItemsForCheckOut).subscribe(
+      (res: any) => {
+        if (res != undefined) {
+          this.cartItems = res;
+          this.cartItemsService.sendCartItemCount.next(this.cartItems.length);
+          this.cartItemsService.resetCartSubject.next(0);
+          this.deleteSelectedLoading = false;
+          this.displaySnackBar("Selected items are deleted from cart.")
+        }
+      },
+      (err: any) => {
+        console.log("error in deleting cart items")
+        this.deleteSelectedLoading = false;
+        this.displaySnackBar("Error deleting selected items from cart")
+      }
+    )
+    }
   displaySnackBar(message: string){
     this.snackBar.open(message, "Close", {duration : 2000})
   }

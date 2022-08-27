@@ -85,6 +85,14 @@ public class CartItemService {
         return null;
     }
 
+    public  List<CartItem> deleteCartItemsByCartItemsList(List<CartItem> cartItemList){
+        ArrayList<Long> cartItemIds = new ArrayList<>();
+        for(CartItem cartItem: cartItemList) cartItemIds.add(cartItem.getId());
+        cartItemRepository.deleteAllById(cartItemIds);
+        List<CartItem> remainingCartItems = cartItemRepository.findAll();
+        return remainingCartItems;
+    }
+
     public CartItem addCartItemByCustomerUserNameAndProductId(String customerUserName, long productId, long count) {
         Customer customer = customerService.getByUserName(customerUserName);
         System.out.println("flag0 " + customerUserName);

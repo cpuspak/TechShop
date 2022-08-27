@@ -68,4 +68,15 @@ public class CartItemController {
         }
 
     }
+
+    @DeleteMapping("/deleteCartItemsByCartItemsList")
+    ResponseEntity<?> deleteCartItemsByCartItemsList(@RequestBody CartItemList cartItemList){
+        try{
+            System.out.println(cartItemList);
+            List<CartItem> availableCartItems = this.cartItemService.deleteCartItemsByCartItemsList(cartItemList.getCartItemList());
+            return ResponseEntity.ok().body(availableCartItems);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("internal server error");
+        }
+    }
 }

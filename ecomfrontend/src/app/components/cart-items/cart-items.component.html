@@ -39,8 +39,6 @@
       <div *ngIf="!numberOfItemsValidator.hasError('min') && !numberOfItemsValidator.hasError('required')" style="padding-right: 10px; padding-bottom:5px">
           Subtotal = {{cartItem.noOfUnits*cartItem.product.price}}
       </div>
-      <button mat-button color="warn" (click)="deleteCartItem($event)" id={{cartItem.id}}>Remove Item</button>
-      <img *ngIf="loading == true" src="assets/gifs/Rhombus.gif" alt="" style="height: 20px; width: 20px;">
     </div>
   </mat-card-actions>
 </mat-card>

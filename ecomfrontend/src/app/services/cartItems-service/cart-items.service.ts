@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -11,6 +11,7 @@ export class CartItemsService {
   getCartItemsByCustomerUserNameUrl: string = "http://localhost:8081/cartItem/getCartItemsByCustomerUserName"
   removeCartItemsByCartItemIdUrl: string = "http://localhost:8081/cartItem/removeCartItemByCartItemId"
   checkoutCartItemByCartItemsListUrl: string = "http://localhost:8081/cartItem/checkoutCartItemByCartItemsList"
+  removeCartItemsByCartItemList: string = "http://localhost:8081/cartItem/deleteCartItemsByCartItemsList"
 
 
   sendCartItemCount = new Subject()
@@ -53,6 +54,18 @@ export class CartItemsService {
   checkoutCartItems(cartItems: any){
     console.log("cartItems to checkout", cartItems)
     return this.http.post(this.checkoutCartItemByCartItemsListUrl,{"cartItemList": cartItems});
+  }
+
+  removeSelectedCartItems(cartItems: any){
+    var options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body : {
+        "cartItemList": cartItems,
+      }
+    }
+    return this.http.delete(this.removeCartItemsByCartItemList,options);
   }
 
 }
