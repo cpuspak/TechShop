@@ -3,6 +3,8 @@ import { FilterByPrice } from 'src/app/interfaces/FilterByPrice';
 import { FilterByPriceService } from 'src/app/services/filter-by-price-service/filter-by-price.service';
 import { ProductCategoryService } from 'src/app/services/product-category-service/product-category.service';
 import { ProductService } from 'src/app/services/product-service/product.service';
+import { LoginCustomerService } from 'src/app/services/login-customer-service/login-customer.service';
+
 
 @Component({
   selector: 'app-items-by-category',
@@ -14,12 +16,16 @@ export class ItemsByCategoryComponent implements OnInit, DoCheck, AfterContentIn
 
   category: string = ""
   products:any = null
+  isLoggedIn: boolean = false
+  loadingProducts: boolean = false;
   constructor(private productCategoryService:ProductCategoryService,
     private productService:ProductService,
-    private filterByPriceService: FilterByPriceService) { }
+    private filterByPriceService: FilterByPriceService,
+    private loginService: LoginCustomerService) { }
   
   ngOnInit(): void {
     this.fetchProducts()
+    this.isLoggedIn = this.loginService.isLoggedIn()
   }
 
   ngDoCheck() {
@@ -71,18 +77,23 @@ export class ItemsByCategoryComponent implements OnInit, DoCheck, AfterContentIn
     this.productCategoryService.selectedCategory.subscribe(
       (res:any) => {
         this.category = res
+        console.log("category", this.category)
+        this.loadingProducts = true;
         this.productService.getProductsByCategoryName(this.category).subscribe(
           (res: any) => {
             this.products = res
             //console.log(res)
+            this.loadingProducts = false;
             this.filterByPriceService.newCategoryClick.next(0);
           },
           err => {
+            this.loadingProducts = false;
             console.log("error getting products by product category", err)
           }
         )
       },
       err => {
+        this.loadingProducts = false;
         console.log("Error getting currently selected category")
       }
     )

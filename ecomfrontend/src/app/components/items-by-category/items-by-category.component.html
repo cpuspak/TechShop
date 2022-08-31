@@ -10,12 +10,14 @@
         <app-filter-by-price></app-filter-by-price>
     </div>
     
+    <img *ngIf="loadingProducts == true && !(products == null || products.length == 0)" src="assets/gifs/Rhombus.gif" alt="" class="loadingImageCenter">
     <div *ngIf="products != null && products.length > 0">
         <div *ngFor="let element of products"  class="products">
             <app-item-tile [product]="element"></app-item-tile>
         </div>
     </div>
-    <div *ngIf="products == null || products.length == 0" class="frontPage mat-elevation-z4">
-        <span>Welcome to the TechShop ! You can browse products from several categories in left drawer</span>
+    <div *ngIf="loadingProducts == false && (products == null || products.length == 0)" class="frontPage mat-elevation-z4">
+        <span *ngIf="isLoggedIn">Welcome to the TechShop ! You can browse products from several categories in left drawer</span>
+        <span *ngIf="!isLoggedIn">Welcome to the TechShop !</span>
     </div>
 </div>
