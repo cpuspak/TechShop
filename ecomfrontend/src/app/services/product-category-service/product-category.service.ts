@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 export class ProductCategoryService {
 
   public selectedCategory = new Subject()
+  public productsPipe = new Subject()
 
   categoryListUrl: string = "http://localhost:8081/productCategories/getAllProductCategories"
   

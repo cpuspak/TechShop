@@ -77,7 +77,6 @@ export class ItemsByCategoryComponent implements OnInit, DoCheck, AfterContentIn
     this.productCategoryService.selectedCategory.subscribe(
       (res:any) => {
         this.category = res
-        console.log("category", this.category)
         this.loadingProducts = true;
         this.productService.getProductsByCategoryName(this.category).subscribe(
           (res: any) => {
@@ -85,6 +84,7 @@ export class ItemsByCategoryComponent implements OnInit, DoCheck, AfterContentIn
             //console.log(res)
             this.loadingProducts = false;
             this.filterByPriceService.newCategoryClick.next(0);
+            this.productCategoryService.productsPipe.next(this.products)
           },
           err => {
             this.loadingProducts = false;

@@ -31,6 +31,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartItemsComponent } from './components/cart-items/cart-items.component';
 import { FilterByPriceComponent } from './components/filter-by-price/filter-by-price.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FilterByNameComponent } from './components/filter-by-name/filter-by-name.component';
 
 
 @NgModule({
@@ -48,7 +50,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     CustomerDashboardComponent,
     ItemTileComponent,
     CartItemsComponent,
-    FilterByPriceComponent
+    FilterByPriceComponent,
+    FilterByNameComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatGridListModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatAutocompleteModule
 
   ],
   providers: [],

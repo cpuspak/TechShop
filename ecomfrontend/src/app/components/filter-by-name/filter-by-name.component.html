@@ -1,0 +1,17 @@
+<form [formGroup]="searchFormGroup">
+    <mat-form-field>
+        <mat-label>
+            Search :
+        </mat-label>
+        
+        <input formControlName="productFormControl" matInput type="text" [matAutocomplete]="autocompleteLink" />
+        
+        <mat-autocomplete #autocompleteLink="matAutocomplete" >
+            <mat-option *ngFor="let filteredProduct of filteredProducts" [value]="filteredProduct">
+                {{filteredProduct}}
+            </mat-option>
+        </mat-autocomplete>
+        
+    </mat-form-field>  
+    <button mat-flat-button style="margin: 5px;">View</button>  
+</form>

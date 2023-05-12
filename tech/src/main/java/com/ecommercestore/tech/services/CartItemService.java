@@ -9,6 +9,7 @@ import com.ecommercestore.tech.repository.CustomerRepository;
 import com.ecommercestore.tech.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +89,10 @@ public class CartItemService {
     public  List<CartItem> deleteCartItemsByCartItemsList(List<CartItem> cartItemList){
         ArrayList<Long> cartItemIds = new ArrayList<>();
         for(CartItem cartItem: cartItemList) cartItemIds.add(cartItem.getId());
+        Customer customer = cartItemRepository.getById(cartItemList.get(0).getId()).getCustomer();
+        Long customerId = customer.getId();
         cartItemRepository.deleteAllById(cartItemIds);
-        List<CartItem> remainingCartItems = cartItemRepository.findAll();
+        List<CartItem> remainingCartItems = cartItemRepository.findByCustomerId(customerId);
         return remainingCartItems;
     }
 
